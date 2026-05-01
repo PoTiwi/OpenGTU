@@ -10,7 +10,7 @@
 
 /* 0 = fixed / orbit (centred on scene origin)                  */
 /* 1 = free-fly  (WASD to move, arrow keys to look)            */
-#define camera  1
+#define camera  0
 
 #define SCREEN_WIDTH   120      /* Terminal columns             */
 #define SCREEN_HEIGHT   40      /* Terminal rows                */
