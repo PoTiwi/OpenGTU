@@ -17,10 +17,6 @@
 #include "../include/animation.h"
 #include "../include/scene_io.h"
 
-/* ============================================================
- *  OpenGTU — Main engine loop
- * ============================================================ */
-
 /* Portable high-res time in seconds */
 static double now_seconds(void) {
     struct timespec ts;
@@ -28,8 +24,10 @@ static double now_seconds(void) {
     return ts.tv_sec + ts.tv_nsec * 1e-9;
 }
 
-static void build_demo_scene(Scene *s, AnimationSystem *anim) {
-    /* Ambient + directional light */
+static void global_space(Scene *s, AnimationSystem *anim) {
+    // Examples here
+    
+    /* Ambient + directional light 
     s->ambient = (Vec3){0.15f, 0.15f, 0.15f};
     s->gravity = (Vec3){0, -GRAVITY, 0};
 
@@ -37,14 +35,16 @@ static void build_demo_scene(Scene *s, AnimationSystem *anim) {
     s->lights[0].direction   = v3_norm((Vec3){1, -1, 0.5f});
     s->lights[0].intensity   = 0.9f;
     s->light_count = 1;
+    */
 
-    /* Ground plane */
+    /* Ground plane
     Object *plane = scene_add_object(s, SHAPE_PLANE,
         (Vec3){0,-1,0}, v3_zero(), (Vec3){5,1,5});
     plane->anchored  = true;
     plane->shading   = __retu_gst_classic();
+    */
 
-    /* Spinning cube */
+    /* Spinning cube
     Object *cube = scene_add_object(s, SHAPE_CUBE,
         (Vec3){-2, 0, 0}, v3_zero(), v3_one());
     int spin = anim_create(anim, cube->id, true);
@@ -52,20 +52,24 @@ static void build_demo_scene(Scene *s, AnimationSystem *anim) {
     anim_add_key(anim, spin, (Keyframe){2.0f, {-2,0,0},{0,(float)M_PI,0},{1,1,1}});
     anim_add_key(anim, spin, (Keyframe){4.0f, {-2,0,0},{0,2*(float)M_PI,0},{1,1,1}});
     anim_play(anim, spin);
+    */
 
-    /* Sphere */
+    /* Sphere 
     scene_add_object(s, SHAPE_SPHERE,
         (Vec3){1, 0, 1}, v3_zero(), (Vec3){0.8f,0.8f,0.8f});
+    */
 
-    /* Cone */
+    /* Cone 
     scene_add_object(s, SHAPE_CONE,
-        (Vec3){3, 0, -1}, v3_zero(), v3_one());
+        (Vec3){3, 0, -1}, v3_zero(), v3_one());\
+    */
 
-    /* Cylinder */
+    /* Cylinder
     scene_add_object(s, SHAPE_CYLINDER,
         (Vec3){-3, 0, 2}, v3_zero(), (Vec3){0.6f,1.2f,0.6f});
+    */
 
-    /* Custom voxel shape (square with gap) */
+    /* Custom voxel shape (square with gap) 
     Object *custom = scene_add_object(s, SHAPE_CUSTOM,
         (Vec3){0, 1, 3}, v3_zero(), (Vec3){0.3f,0.3f,0.3f});
     custom->vox_w = SHAPE_SQUARE_W;
@@ -74,15 +78,16 @@ static void build_demo_scene(Scene *s, AnimationSystem *anim) {
     memcpy(custom->voxels, shape_square,
            SHAPE_SQUARE_W * SHAPE_SQUARE_H * SHAPE_SQUARE_D * sizeof(int));
     object_build_mesh(custom);
+    */
 
-    /* Bouncing sphere (physics demo) */
+    /* Bouncing sphere (physics demo)
     Object *ball = scene_add_object(s, SHAPE_SPHERE,
         (Vec3){0, 5, 0}, v3_zero(), (Vec3){0.5f,0.5f,0.5f});
     ball->body.velocity = (Vec3){0.8f, 0, 0};
+    */
 }
 
 int main(int argc, char *argv[]) {
-    /* ---- Startup ----------------------------------------- */
     printf("OpenGTU v1.0 — ASCII 3-D Terminal Engine\n");
     printf("Controls: WASD=move  Arrows=look  Q/E=up/dn\n");
     printf("          F1=wireframe  F2=debug  F3=shade  ESC=quit\n");
@@ -109,10 +114,10 @@ int main(int argc, char *argv[]) {
         if (scene_load(scene, argv[1]) != 0) {
             fprintf(stderr, "Warning: could not load '%s', using demo scene.\n",
                     argv[1]);
-            build_demo_scene(scene, anim);
+            global_space(scene, anim);
         }
     } else {
-        build_demo_scene(scene, anim);
+        global_space(scene, anim);
     }
 
     const double frame_time = 1.0 / FPS;
