@@ -23,6 +23,7 @@ make run
 
 ## Configuration (`include/config.h`)
 
+*(everything here is set by defualt)*
 | Macro | Default | Description |
 |-------|---------|-------------|
 | `FPS` | 60 | Target render framerate |
